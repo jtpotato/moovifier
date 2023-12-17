@@ -494,9 +494,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 534564239}
+  - component: {fileID: 534564240}
   - component: {fileID: 534564238}
   - component: {fileID: 534564241}
-  - component: {fileID: 534564240}
   - component: {fileID: 534564242}
   m_Layer: 0
   m_Name: CameraTransform
@@ -546,7 +546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 60
-  moveSpeed: 20
+  zoomSpeed: 1
   rotationMagnitude: 50
 --- !u!114 &534564241
 MonoBehaviour:
