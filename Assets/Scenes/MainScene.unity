@@ -457,6 +457,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoomZCoordinate: 0
+  zoomSounds:
+  - {fileID: 8300000, guid: fecd963a2e874496f94da767f8a98c91, type: 3}
+  - {fileID: 8300000, guid: dc0a5d7173d924c9f8871fd4834deb38, type: 3}
+  - {fileID: 8300000, guid: 279c368f837ee4f40b9d1e9439f16e3d, type: 3}
 --- !u!4 &534564239
 Transform:
   m_ObjectHideFlags: 0

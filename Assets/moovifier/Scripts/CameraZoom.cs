@@ -10,6 +10,7 @@ public class CameraZoom : MonoBehaviour
     Vector3 mousePos;
     AnimationCurve animationCurve;
     [SerializeField] float zoomZCoordinate;
+    [SerializeField] AudioClip[] zoomSounds;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +35,13 @@ public class CameraZoom : MonoBehaviour
             state.isZoomed = true;
             Vector3 targetPos = new Vector3(mousePos.x, mousePos.y, zoomZCoordinate);
 
+            // play zoom sound
+            if (zoomSounds.Length > 0)
+            {
+                int randomIndex = Random.Range(0, zoomSounds.Length);
+                AudioSource.PlayClipAtPoint(zoomSounds[randomIndex], transform.position);
+            }
+
             StartCoroutine(MovementHelper.SmoothVector3(transform.position, targetPos, state.zoomSpeed, animationCurve,
             (Vector3 newPos) =>
             {
@@ -45,6 +53,13 @@ public class CameraZoom : MonoBehaviour
         {
             state.isZoomed = false;
             state.isMoving = true;
+
+            // play zoom sound
+            if (zoomSounds.Length > 0)
+            {
+                int randomIndex = Random.Range(0, zoomSounds.Length);
+                AudioSource.PlayClipAtPoint(zoomSounds[randomIndex], transform.position);
+            }
             StartCoroutine(MovementHelper.SmoothVector3(transform.position, homePos, state.zoomSpeed, animationCurve,
             (Vector3 newPos) =>
             {
