@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraState : MonoBehaviour
 {
     public float rotationSpeed = 15f;
-    public float moveSpeed = 1f;
+    public float zoomSpeed = 1f;
     public float rotationMagnitude = 30f;
     bool _isZoomed = false;
 

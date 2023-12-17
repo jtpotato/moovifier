@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraTransform : MonoBehaviour
+public class CameraZoom : MonoBehaviour
 {
     Camera cam;
     Vector3 homePos;
@@ -33,7 +33,7 @@ public class CameraTransform : MonoBehaviour
             {
                 state.isZoomed = false;
                 state.isMoving = true;
-                StartCoroutine(MovementHelper.SmoothVector3(transform.position, homePos, state.moveSpeed,
+                StartCoroutine(MovementHelper.SmoothVector3(transform.position, homePos, state.zoomSpeed,
                 (Vector3 newPos) => {
                     transform.position = newPos;
                 },
@@ -43,7 +43,7 @@ public class CameraTransform : MonoBehaviour
             {
                 state.isMoving = true;
                 state.isZoomed = true;
-                StartCoroutine(MovementHelper.SmoothVector3(transform.position, mousePos, state.moveSpeed, (Vector3 newPos) => {
+                StartCoroutine(MovementHelper.SmoothVector3(transform.position, mousePos, state.zoomSpeed, (Vector3 newPos) => {
                     transform.position = newPos;
                 },
                 () => state.isMoving = false));
