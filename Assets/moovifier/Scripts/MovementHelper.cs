@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class MovementHelper
 {
-    public static IEnumerator SmoothVector3(Vector3 start, Vector3 destination, float moveSpeed, Action<Vector3> update, Action callback)
+    public static IEnumerator SmoothVector3(Vector3 start, Vector3 destination, float moveSpeed, AnimationCurve curve, Action<Vector3> update, Action callback)
     {
         float dist = Vector3.Distance(start, destination);
         float duration = dist / moveSpeed;
@@ -13,8 +13,7 @@ public static class MovementHelper
         while (timeElapsed < duration)
         {
             float progress = timeElapsed / duration;
-            float curve = Mathf.SmoothStep(0f, 1f, progress);
-            Vector3 intermediateVector3 = Vector3.Lerp(start, destination, curve);
+            Vector3 intermediateVector3 = Vector3.Lerp(start, destination, curve.Evaluate(progress));
             update(intermediateVector3);
             yield return null;
 
@@ -26,7 +25,7 @@ public static class MovementHelper
     }
 
     // same but for Quaternions
-    public static IEnumerator SmoothQuaternion(Quaternion start, Quaternion destination, float moveSpeed, Action<Quaternion> update, Action callback)
+    public static IEnumerator SmoothQuaternion(Quaternion start, Quaternion destination, float moveSpeed, AnimationCurve curve, Action<Quaternion> update, Action callback)
     {
         float dist = Quaternion.Angle(start, destination);
         float duration = dist / moveSpeed;
@@ -35,8 +34,7 @@ public static class MovementHelper
         while (timeElapsed < duration)
         {
             float progress = timeElapsed / duration;
-            float curve = Mathf.SmoothStep(0f, 1f, progress);
-            Quaternion intermediateQuaternion = Quaternion.Lerp(start, destination, curve);
+            Quaternion intermediateQuaternion = Quaternion.Lerp(start, destination, curve.Evaluate(progress));
             update(intermediateQuaternion);
             yield return null;
 

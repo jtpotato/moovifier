@@ -6,11 +6,13 @@ public class CameraRotater : MonoBehaviour
 {
     CameraState state;
     Quaternion homeRotation;
+    AnimationCurve animationCurve;
     // Start is called before the first frame update
     void Start()
     {
         state = GetComponent<CameraState>();
         homeRotation = transform.rotation;
+        animationCurve = GetComponent<MVAnimationCurve>().globalAnimationCurve;
     }
 
     // Update is called once per frame
@@ -20,7 +22,7 @@ public class CameraRotater : MonoBehaviour
             state.isRotated = false;
             state.isRotating = true;
             StartCoroutine(
-                MovementHelper.SmoothQuaternion(transform.rotation, homeRotation, state.rotationSpeed,
+                MovementHelper.SmoothQuaternion(transform.rotation, homeRotation, state.rotationSpeed, animationCurve,
                 (Quaternion newRotation) =>
                 {
                     transform.rotation = newRotation;
@@ -51,7 +53,7 @@ public class CameraRotater : MonoBehaviour
                     destinationRotation = transform.rotation.eulerAngles + new Vector3(-state.rotationMagnitude, 0f, 0f);
 
                 StartCoroutine(
-                    MovementHelper.SmoothQuaternion(homeRotation, Quaternion.Euler(destinationRotation), state.rotationSpeed,
+                    MovementHelper.SmoothQuaternion(homeRotation, Quaternion.Euler(destinationRotation), state.rotationSpeed, animationCurve,
                     (Quaternion newRotation) =>
                     {
                         transform.rotation = newRotation;
@@ -69,7 +71,7 @@ public class CameraRotater : MonoBehaviour
                 state.isRotated = false;
                 state.isRotating = true;
                 StartCoroutine(
-                    MovementHelper.SmoothQuaternion(transform.rotation, homeRotation, state.rotationSpeed,
+                    MovementHelper.SmoothQuaternion(transform.rotation, homeRotation, state.rotationSpeed, animationCurve,
                     (Quaternion newRotation) =>
                     {
                         transform.rotation = newRotation;

@@ -7,53 +7,57 @@ public class CameraZoom : MonoBehaviour
     Camera cam;
     Vector3 homePos;
     CameraState state;
-
+    Vector3 mousePos;
+    AnimationCurve animationCurve;
+    [SerializeField] float zoomZCoordinate;
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
         homePos = transform.position;
         state = GetComponent<CameraState>();
+        animationCurve = GetComponent<MVAnimationCurve>().globalAnimationCurve;
     }
-
-    Vector3 mousePos;
 
     // Update is called once per frame
     void Update()
     {
         mousePos = Input.mousePosition;
 
-        mousePos.z = 15f;
+        mousePos.z = 10f;
         mousePos = cam.ScreenToWorldPoint(mousePos);
 
         // If click, set transform position and stuff.
         if (Input.GetMouseButtonDown(0) && !state.isMoving)
         {
-            if (state.isZoomed)
+            state.isMoving = true;
+            state.isZoomed = true;
+            Vector3 targetPos = new Vector3(mousePos.x, mousePos.y, zoomZCoordinate);
+
+            StartCoroutine(MovementHelper.SmoothVector3(transform.position, targetPos, state.zoomSpeed, animationCurve,
+            (Vector3 newPos) =>
             {
-                state.isZoomed = false;
-                state.isMoving = true;
-                StartCoroutine(MovementHelper.SmoothVector3(transform.position, homePos, state.zoomSpeed,
-                (Vector3 newPos) => {
-                    transform.position = newPos;
-                },
-                () => state.isMoving = false));
-            }
-            else
+                transform.position = newPos;
+            },
+            () => state.isMoving = false));
+        }
+        if (Input.GetKey(KeyCode.Escape) && state.isZoomed)
+        {
+            state.isZoomed = false;
+            state.isMoving = true;
+            StartCoroutine(MovementHelper.SmoothVector3(transform.position, homePos, state.zoomSpeed, animationCurve,
+            (Vector3 newPos) =>
             {
-                state.isMoving = true;
-                state.isZoomed = true;
-                StartCoroutine(MovementHelper.SmoothVector3(transform.position, mousePos, state.zoomSpeed, (Vector3 newPos) => {
-                    transform.position = newPos;
-                },
-                () => state.isMoving = false));
-            }
+                transform.position = newPos;
+            },
+            () => state.isMoving = false));
         }
     }
 
     void OnDrawGizmos()
     {
+        Vector3 targetPos = new Vector3(mousePos.x, mousePos.y, zoomZCoordinate);
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(mousePos, 0.5f);
+        Gizmos.DrawSphere(targetPos, 0.5f);
     }
 }

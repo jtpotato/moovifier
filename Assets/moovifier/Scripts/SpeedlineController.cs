@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 public class SpeedlineController : MonoBehaviour
 {
     [SerializeField] VisualEffect vfx;
+    [SerializeField] int rate;
     CameraState state;
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class SpeedlineController : MonoBehaviour
     void Update()
     {
         if (state.isMoving) {
-            vfx.SetInt("rate", 32);
+            vfx.SetInt("rate", rate);
         }
         else {
             vfx.SetInt("rate", 0);
