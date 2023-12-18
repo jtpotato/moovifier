@@ -26,6 +26,7 @@ public class CameraZoom : MonoBehaviour
     void Update()
     {
         if (appState.lockMovement) return;
+        if (state.isMoving) return;
 
         mousePos = Input.mousePosition;
 
@@ -35,13 +36,16 @@ public class CameraZoom : MonoBehaviour
         // If click, set transform position and stuff.
         if (Input.GetMouseButtonDown(0) && !state.isMoving)
         {
+            float speed = state.zoomSpeed;
+
+            if (state.isZoomed) speed /= 2.5f;
+            if (!state.isZoomed) soundPlayer.SoundEvent();
+
             state.isMoving = true;
             state.isZoomed = true;
             Vector3 targetPos = new Vector3(mousePos.x, mousePos.y, zoomZCoordinate);
 
-            soundPlayer.SoundEvent();
-
-            StartCoroutine(MovementHelper.SmoothVector3(transform.position, targetPos, state.zoomSpeed, animationCurve,
+            StartCoroutine(MovementHelper.SmoothVector3(transform.position, targetPos, speed, animationCurve,
             (Vector3 newPos) =>
             {
                 transform.position = newPos;
@@ -49,7 +53,8 @@ public class CameraZoom : MonoBehaviour
             () => state.isMoving = false));
         }
 
-        if (Input.GetKey(KeyCode.Escape) && state.isZoomed)
+        // Return to home
+        if (Input.GetKey(KeyCode.Escape) && state.isZoomed || Input.GetKeyDown(KeyCode.O))
         {
             state.isZoomed = false;
             state.isMoving = true;

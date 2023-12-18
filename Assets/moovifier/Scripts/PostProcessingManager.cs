@@ -22,6 +22,5 @@ public class PostProcessingManager : MonoBehaviour
     {
         float distance = Mathf.Abs(cameraTransform.position.z) + 7;
         depthOfField.focusDistance.value = distance;
-        Debug.Log(depthOfField.focusDistance.value);
     }
 }

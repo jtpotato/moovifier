@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 65f1da6b2207c4c3eaf18c6d74cbcef4, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.022265658, g: 0.02883562, b: 0.071074374, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -388,7 +388,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -646,12 +646,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.51224566
       value: 0.49861178
-      inSlope: 3.1921782
-      outSlope: 3.1921782
+      inSlope: 3.2714007
+      outSlope: 3.2714007
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.072710544
-      outWeight: 0.33333334
+      outWeight: 0.06886191
     - serializedVersion: 3
       time: 1
       value: 1

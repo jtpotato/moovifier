@@ -32,8 +32,15 @@ public class ReadInput : MonoBehaviour
 
     private void OnVideoPlayerError(VideoPlayer source, string message)
     {
-        Debug.LogError("Video Player Error: " + message);
+        Debug.Log("Video Player Error: " + message);
         uiLayer.SetActive(true);
         appState.lockMovement = true;
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.O)) {
+            uiLayer.SetActive(true);
+            appState.lockMovement = true;
+        }
     }
 }
