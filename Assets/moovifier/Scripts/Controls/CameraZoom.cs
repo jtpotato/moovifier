@@ -10,7 +10,8 @@ public class CameraZoom : MonoBehaviour
     Vector3 mousePos;
     AnimationCurve animationCurve;
     [SerializeField] float zoomZCoordinate;
-    [SerializeField] AudioClip[] zoomSounds;
+    [SerializeField] AppState appState;
+    SoundPlayer soundPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +19,17 @@ public class CameraZoom : MonoBehaviour
         homePos = transform.position;
         state = GetComponent<CameraState>();
         animationCurve = GetComponent<MVAnimationCurve>().globalAnimationCurve;
+        soundPlayer = GetComponent<SoundPlayer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (appState.lockMovement) return;
+
         mousePos = Input.mousePosition;
 
-        mousePos.z = 10f;
+        mousePos.z = state.isZoomed ? 5f : 10f;
         mousePos = cam.ScreenToWorldPoint(mousePos);
 
         // If click, set transform position and stuff.
@@ -35,12 +39,7 @@ public class CameraZoom : MonoBehaviour
             state.isZoomed = true;
             Vector3 targetPos = new Vector3(mousePos.x, mousePos.y, zoomZCoordinate);
 
-            // play zoom sound
-            if (zoomSounds.Length > 0)
-            {
-                int randomIndex = Random.Range(0, zoomSounds.Length);
-                AudioSource.PlayClipAtPoint(zoomSounds[randomIndex], transform.position);
-            }
+            soundPlayer.SoundEvent();
 
             StartCoroutine(MovementHelper.SmoothVector3(transform.position, targetPos, state.zoomSpeed, animationCurve,
             (Vector3 newPos) =>
@@ -49,17 +48,14 @@ public class CameraZoom : MonoBehaviour
             },
             () => state.isMoving = false));
         }
+
         if (Input.GetKey(KeyCode.Escape) && state.isZoomed)
         {
             state.isZoomed = false;
             state.isMoving = true;
 
-            // play zoom sound
-            if (zoomSounds.Length > 0)
-            {
-                int randomIndex = Random.Range(0, zoomSounds.Length);
-                AudioSource.PlayClipAtPoint(zoomSounds[randomIndex], transform.position);
-            }
+            soundPlayer.SoundEvent();
+
             StartCoroutine(MovementHelper.SmoothVector3(transform.position, homePos, state.zoomSpeed, animationCurve,
             (Vector3 newPos) =>
             {

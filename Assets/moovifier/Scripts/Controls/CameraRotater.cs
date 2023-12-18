@@ -7,6 +7,7 @@ public class CameraRotater : MonoBehaviour
     CameraState state;
     Quaternion homeRotation;
     AnimationCurve animationCurve;
+    [SerializeField] AppState appState;
     // Start is called before the first frame update
     void Start()
     {
